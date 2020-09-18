@@ -6,13 +6,14 @@ form.addEventListener('submit', (event) => {
     const formData = new FormData(form);
     const name = formData.get('name');
     const recipient = formData.get('recipient');
-    const recipient = formData.get('recipient');
+    const favorSelect = formData.get('favorSelect');
 
-    const serv = {
+    const favorForm = {
         name,
-        content
+        recipient,
+        favorSelect
     };
-    console.log(serv);
+    console.log(favorForm);
     console.log('form was submitted');
 
 });

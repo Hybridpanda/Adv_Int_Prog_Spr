@@ -25,3 +25,6 @@ I have put in a table to show the end result but have not implemented it.
 what I want to do next:
 I want to implement the form to send, set up a server to listen for it and get it to store either locally or in a json file.
 implement being able to check the box.
+
+before wifi drop:
+I have made the form work, im just setting up the sever side, im searching if I need morgan or should I just use express
