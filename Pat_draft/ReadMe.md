@@ -39,3 +39,6 @@ dev run = npm run dev
 node run = npm start
 
 you will need live server for the front end
+
+some useful links:
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Details_of_the_Object_Model
