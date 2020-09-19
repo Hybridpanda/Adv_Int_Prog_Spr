@@ -28,3 +28,9 @@ implement being able to check the box.
 
 before wifi drop:
 I have made the form work, im just setting up the sever side, im searching if I need morgan or should I just use express
+
+https://www.youtube.com/watch?v=4zr8j-jeU_M&list=PLRqwX-V7Uu6Yyn-fBtGHfN0_xCtBwUkBp&index=6&ab_channel=TheCodingTrain
+https://www.youtube.com/watch?v=JnEH9tYLxLk&ab_channel=TheCodingTrain
+
+https://www.youtube.com/watch?v=5sa0acU4pmY&ab_channel=DavidBombal
+https://www.benjaminjohnston.com.au/extras/aipjs/workbook/chapter02_setup.html
