@@ -38,3 +38,4 @@ https://www.benjaminjohnston.com.au/extras/aipjs/workbook/chapter02_setup.html
 dev run = npm run dev
 node run = npm start
 
+you will need live server for the front end
