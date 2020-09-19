@@ -52,7 +52,6 @@ app.post('/home', (req, res) => { // incoming get from front end live server
         nUser.setfavor(req.body.favorSelect.toString());
         console.log(nUser.toString());
         users.push(nUser);
-
     } else {
         res.status(422);
         res.json({
