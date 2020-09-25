@@ -6,6 +6,8 @@ const cors = require("cors");
 app.use(express.json());
 app.use(cors());
 
+//ROUTES\\
+//landing page
 app.use("/", require("./Routes/landingPage"));
-
+// listening
 app.listen(5000, () => console.log("Example app listening on port 5000!"));
