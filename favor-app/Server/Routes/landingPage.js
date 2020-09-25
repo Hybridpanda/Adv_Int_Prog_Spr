@@ -1,7 +1,7 @@
 const router = require("express").Router();
 
 router.get("/", async (req, res) => {
-  res.send("LANDING");
+  res.json("LANDING");
 });
 
 module.exports = router;
