@@ -2,8 +2,9 @@ const router = require("express").Router();
 const pool = require("../db");
 const bcrypt = require("bcrypt");
 const jwtGenerator = require("../utils/jwtGenerator");
+const validateInfo = require("../middleware/validateInfo");
 
-router.post("/register", async (req, res) => {
+router.post("/register", validateInfo, async (req, res) => {
   try {
     //1. destructure the req.body (name, email, password)
     const { name, email, password } = req.body;
@@ -38,7 +39,7 @@ router.post("/register", async (req, res) => {
 });
 
 // login
-router.post("/login", async (req, res) => {
+router.post("/login", validateInfo, async (req, res) => {
   try {
     //1. destructure req.body
     const { email, password } = req.body;
@@ -52,7 +53,18 @@ router.post("/login", async (req, res) => {
       return res.status(401).json("Password or Email is incorrect");
     }
     //3. check if incoming password match database
+    const validPassword = await bcrypt.compare(
+      password,
+      user.rows[0].user_password
+    );
+
+    if (!validPassword) {
+      return res.status(401).json("Password or Email is incorrect");
+    }
     //4. give them jwt token
+    const token = jwtGenerator(user.rows[0].user_id);
+
+    res.json({ token });
   } catch (err) {
     console.error(err.message);
     res.status(500).json("Server Error");
