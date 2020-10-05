@@ -19,13 +19,13 @@ INSERT INTO authusers (user_name, user_email, user_password) VALUES ('test', 'te
 ALTER TABLE authusers ADD CONSTRAINT email_unique UNIQUE (user_email);
 
 
-CREATE TABLE favors(
-    favor_id SERIAL,
+CREATE TABLE favours(
+    favour_id SERIAL,
     user_id UUID,
     description VARCHAR(255) NOT NULL,
-    PRIMARY KEY (favor_id),
+    PRIMARY KEY (favour_id),
     FOREIGN KEY (user_id) REFERENCES authusers(user_id)
 )
 
 --fake favor data the first value should be copied from the user id in authusers
-INSERT INTO favors (user_id, description) values ('', '')
+INSERT INTO favours (user_id, description) values ('', '')
