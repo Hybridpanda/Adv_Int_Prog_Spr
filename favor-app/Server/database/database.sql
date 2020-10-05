@@ -5,13 +5,18 @@ CREATE DATABASE favorapp;
 CREATE TABLE authusers(
     user_id uuid //PRIMARY KEY DEFAULT uuid_generate_v4(),
     user_name VARCHAR(255) NOT NULL,
-    user_email VARCHAR(255) NOT NULL,
+    user_email VARCHAR(255) NOT NULL UNIQUE,
     user_password VARCHAR(255) NOT NULL,
     //PRIMARY KEY(user_id)
 );
 
 -- fake data the values need to be in single quotes
 INSERT INTO authusers (user_name, user_email, user_password) VALUES ('henry', 'henry123@gmail.com', 'cat123456');
+
+CREATE UNIQUE INDEX CONCURRENTLY authusers_user_email ON authusers (user_email);
+
+ALTER TABLE authusers ADD CONSTRAINT email_unique UNIQUE (user_email);
+
 
 CREATE TABLE favors(
     favor_id SERIAL,

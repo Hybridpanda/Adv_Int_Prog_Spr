@@ -8,6 +8,7 @@ const Register = ({ setAuth }) => {
     name: "",
   });
   const { email, password, name } = inputs;
+  const [error, setError] = useState(false);
 
   const onChange = (e) => {
     setInputs({ ...inputs, [e.target.name]: e.target.value });
@@ -17,6 +18,7 @@ const Register = ({ setAuth }) => {
     e.preventDefault();
 
     try {
+      setError(false);
       const formBody = { email, password, name };
       const response = await fetch("http://localhost:5000/auth/register", {
         method: "POST",
@@ -25,9 +27,14 @@ const Register = ({ setAuth }) => {
       });
 
       const parseRes = await response.json();
-      localStorage.setItem("token", parseRes.token);
+      if (parseRes.token) {
+        localStorage.setItem("token", parseRes.token);
 
-      setAuth(true);
+        setAuth(true);
+      } else {
+        setAuth(false);
+        setError(true);
+      }
     } catch (err) {
       console.error(err.message);
     }
@@ -36,6 +43,11 @@ const Register = ({ setAuth }) => {
   return (
     <Fragment>
       <h1 className="text-center my-5">Register</h1>
+      {error && (
+        <div class="alert alert-danger" role="alert">
+          User already exists
+        </div>
+      )}
       <form onSubmit={onSubmitForm}>
         <input
           type="email"
