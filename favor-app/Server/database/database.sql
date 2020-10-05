@@ -2,19 +2,19 @@ CREATE DATABASE favorapp;
 -- go into database \c ...
 -- set extension https://www.xtuple.com/knowledge/how-do-i-install-uuid-ossp
 -- create extension if not exists "uuid-ossp";
+-- I didnt have that primary key in the bottom as its in the user_id already
 CREATE TABLE authusers(
-    user_id uuid //PRIMARY KEY DEFAULT uuid_generate_v4(),
+    user_id uuid DEFAULT uuid_generate_v4(),
     user_name VARCHAR(255) NOT NULL,
     user_email VARCHAR(255) NOT NULL UNIQUE,
     user_password VARCHAR(255) NOT NULL,
-    //PRIMARY KEY(user_id)
+    PRIMARY KEY(user_id)
 );
 
 -- fake data the values need to be in single quotes
-INSERT INTO authusers (user_name, user_email, user_password) VALUES ('henry', 'henry123@gmail.com', 'cat123456');
+INSERT INTO authusers (user_name, user_email, user_password) VALUES ('hello', 'hello@gmail.com', 'cat123');
 
-CREATE UNIQUE INDEX CONCURRENTLY authusers_user_email ON authusers (user_email);
-
+-- if your email is not unique
 ALTER TABLE authusers ADD CONSTRAINT email_unique UNIQUE (user_email);
 
 
