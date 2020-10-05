@@ -13,6 +13,7 @@ CREATE TABLE authusers(
 
 -- fake data the values need to be in single quotes
 INSERT INTO authusers (user_name, user_email, user_password) VALUES ('hello', 'hello@gmail.com', 'cat123');
+INSERT INTO authusers (user_name, user_email, user_password) VALUES ('test', 'test@gmail.com', 'dog123');
 
 -- if your email is not unique
 ALTER TABLE authusers ADD CONSTRAINT email_unique UNIQUE (user_email);
@@ -25,3 +26,6 @@ CREATE TABLE favors(
     PRIMARY KEY (favor_id),
     FOREIGN KEY (user_id) REFERENCES authusers(user_id)
 )
+
+--fake favor data the first value should be copied from the user id in authusers
+INSERT INTO favors (user_id, description) values ('', '')
