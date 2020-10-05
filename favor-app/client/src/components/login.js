@@ -43,7 +43,7 @@ const Login = ({ setAuth }) => {
 
   return (
     <Fragment>
-      <h1 className="text-center my-5">Login</h1>
+      <h1 className="">Login</h1>
       {error && (
         <div class="alert alert-danger" role="alert">
           Invalid Email or Password
