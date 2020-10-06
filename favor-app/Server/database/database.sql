@@ -23,6 +23,7 @@ CREATE TABLE favours(
     favour_id SERIAL,
     user_id UUID,
     description VARCHAR(255) NOT NULL,
+    recipient_id VARCHAR(255),
     PRIMARY KEY (favour_id),
     FOREIGN KEY (user_id) REFERENCES authusers(user_id)
 )
