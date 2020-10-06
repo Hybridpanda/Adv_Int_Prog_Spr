@@ -34,7 +34,7 @@ const Profile = ({ setAuth }) => {
       <Container maxWidth="sm">
         <Typography variant="h4">Profile {name} </Typography>
 
-        <Button variant="contained" onClick={(e) => logout(e)}>
+        <Button variant="contained" color="primary" onClick={(e) => logout(e)}>
           logout
         </Button>
       </Container>

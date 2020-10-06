@@ -83,6 +83,7 @@ const Register = ({ setAuth }) => {
             style={{ margin: 8 }}
             fullWidth
             variant="contained"
+            color="primary"
             type="submit"
           >
             Submit
