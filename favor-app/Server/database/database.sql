@@ -29,4 +29,4 @@ CREATE TABLE favours(
 )
 
 --fake favor data the first value should be copied from the user id in authusers
-INSERT INTO favours (user_id, description) values ('', '')
+INSERT INTO favours (user_id, description, recipient_id) values ('', '')
