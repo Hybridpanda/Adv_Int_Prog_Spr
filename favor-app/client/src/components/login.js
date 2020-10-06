@@ -1,5 +1,7 @@
 import React, { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
+import { Button, Container, TextField, Typography } from "@material-ui/core";
+import { Alert } from "@material-ui/lab";
 
 const Login = ({ setAuth }) => {
   const [inputs, setInputs] = useState({
@@ -43,32 +45,52 @@ const Login = ({ setAuth }) => {
 
   return (
     <Fragment>
-      <h1 className="">Login</h1>
-      {error && (
-        <div class="alert alert-danger" role="alert">
-          Invalid Email or Password
-        </div>
-      )}
-      <form onSubmit={onSubmitForm}>
-        <input
-          type="email"
-          name="email"
-          placeholder="email"
-          className="form-control my-3"
-          value={email}
-          onChange={(e) => onChange(e)}
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="password"
-          className="form-control my-3"
-          value={password}
-          onChange={(e) => onChange(e)}
-        />
-        <button className="btn btn-success btn-block">login</button>
-      </form>
-      <Link to="/register">Register</Link>
+      <Container maxWidth="sm">
+        <Typography variant="h4">Login</Typography>
+        {error && (
+          <Alert style={{ margin: 8 }} severity="error">
+            Invalid Email or Password
+          </Alert>
+        )}
+        <form onSubmit={onSubmitForm}>
+          <TextField
+            style={{ margin: 8 }}
+            fullWidth
+            type="email"
+            name="email"
+            placeholder="email"
+            value={email}
+            onChange={(e) => onChange(e)}
+          />
+          <TextField
+            style={{ margin: 8 }}
+            fullWidth
+            type="password"
+            name="password"
+            placeholder="password"
+            value={password}
+            onChange={(e) => onChange(e)}
+          />
+          <Button
+            style={{ margin: 8 }}
+            fullWidth
+            variant="contained"
+            type="submit"
+          >
+            login
+          </Button>
+        </form>
+        <Button
+          style={{ margin: 8 }}
+          variant="outlined"
+          color="primary"
+          size="small"
+          component={Link}
+          to={"/register"}
+        >
+          Register
+        </Button>
+      </Container>
     </Fragment>
   );
 };
