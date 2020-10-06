@@ -1,5 +1,7 @@
 import React, { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
+import { Button, Container, TextField, Typography } from "@material-ui/core";
+import { Alert } from "@material-ui/lab";
 
 const Register = ({ setAuth }) => {
   const [inputs, setInputs] = useState({
@@ -42,40 +44,61 @@ const Register = ({ setAuth }) => {
 
   return (
     <Fragment>
-      <h1 className="text-center my-5">Register</h1>
-      {error && (
-        <div class="alert alert-danger" role="alert">
-          User already exists
-        </div>
-      )}
-      <form onSubmit={onSubmitForm}>
-        <input
-          type="email"
-          name="email"
-          placeholder="email"
-          className="form-control my-3"
-          value={email}
-          onChange={(e) => onChange(e)}
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="password"
-          className="form-control my-3"
-          value={password}
-          onChange={(e) => onChange(e)}
-        />
-        <input
-          type="name"
-          name="name"
-          placeholder="name"
-          className="form-control my-3"
-          value={name}
-          onChange={(e) => onChange(e)}
-        />
-        <button className="btn btn-success btn-block">submit</button>
-      </form>
-      <Link to="/login">login</Link>
+      <Container maxWidth="sm">
+        <Typography variant="h4">Register</Typography>
+        {error && (
+          <Alert style={{ margin: 8 }} severity="error">
+            User already exists
+          </Alert>
+        )}
+        <form onSubmit={onSubmitForm}>
+          <TextField
+            style={{ margin: 8 }}
+            fullWidth
+            type="email"
+            name="email"
+            placeholder="email"
+            value={email}
+            onChange={(e) => onChange(e)}
+          />
+          <TextField
+            style={{ margin: 8 }}
+            fullWidth
+            type="password"
+            name="password"
+            placeholder="password"
+            value={password}
+            onChange={(e) => onChange(e)}
+          />
+          <TextField
+            style={{ margin: 8 }}
+            fullWidth
+            type="name"
+            name="name"
+            placeholder="name"
+            value={name}
+            onChange={(e) => onChange(e)}
+          />
+          <Button
+            style={{ margin: 8 }}
+            fullWidth
+            variant="contained"
+            type="submit"
+          >
+            Submit
+          </Button>
+        </form>
+        <Button
+          style={{ margin: 8 }}
+          variant="outlined"
+          color="primary"
+          size="small"
+          component={Link}
+          to={"/login"}
+        >
+          login
+        </Button>
+      </Container>
     </Fragment>
   );
 };

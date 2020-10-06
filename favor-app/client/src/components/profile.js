@@ -1,4 +1,5 @@
 import React, { Fragment, useState, useEffect } from "react";
+import { Container , Typography, Button } from "@material-ui/core";
 
 const Profile = ({ setAuth }) => {
   const [name, setName] = useState("");
@@ -30,11 +31,13 @@ const Profile = ({ setAuth }) => {
 
   return (
     <Fragment>
-      <h1>Profile {name} </h1>
+      <Container maxWidth="sm">
+        <Typography variant="h4">Profile {name} </Typography>
 
-      <button className="btn btn-primary" onClick={(e) => logout(e)}>
-        logout
-      </button>
+        <Button variant="contained" onClick={(e) => logout(e)}>
+          logout
+        </Button>
+      </Container>
     </Fragment>
   );
 };
