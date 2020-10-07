@@ -15,7 +15,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 
 //components
 
-import Profile from "./components/profile";
+import Profile from "./components/profile/profile";
 import Login from "./components/login";
 import Register from "./components/register";
 
