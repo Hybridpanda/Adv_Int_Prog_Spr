@@ -1,4 +1,4 @@
-CREATE DATABASE favorapp;
+CREATE DATABASE favorapp; -- I need to change the name to favourapp, favor is american variant.
 -- go into database \c ...
 -- set extension https://www.xtuple.com/knowledge/how-do-i-install-uuid-ossp
 -- create extension if not exists "uuid-ossp";
@@ -29,4 +29,7 @@ CREATE TABLE favours(
 );
 
 --fake favor data the first value should be copied from the user id in authusers
-INSERT INTO favours (user_id, description, recipient_id) values ('f37180b7-bbdd-4020-924c-fd241fc27a70', 'coffee', '41482fd9-4a40-4fe2-8c58-d087b4755334');
+INSERT INTO favours (user_id, description, recipient_id) values ('73239eeb-9905-469a-a5ff-0821d62f2226', 'coffee', '0c08a234-ea71-43c9-91d8-e2163861f538');
+
+-- resets the counter favour_id back to 1, please only use this when theres nothing in the favours table im not sure how it will react with values already in it. I dont think we need to worry about using this much, only for development
+SELECT SETVAL((SELECT pg_get_serial_sequence('favours', 'favour_id')), 1, false);

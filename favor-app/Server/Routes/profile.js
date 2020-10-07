@@ -14,23 +14,23 @@ router.get("/", authorisation, async (req, res) => {
       [req.user.id]
     ); */
 
-
-    const user = await pool.query("SELECT a.user_name, f.favour_id, f.description, f.recipient_id from authusers AS a LEFT JOIN favours AS f ON a.user_id = f.user_id WHERE a.user_id = $1", [req.user.id]);
-
+    const user = await pool.query(
+      "SELECT a.user_name, f.favour_id, f.description, f.recipient_id from authusers AS a LEFT JOIN favours AS f ON a.user_id = f.user_id WHERE a.user_id = $1",
+      [req.user.id]
+    );
 
     //create a favour
 
     router.post("/favours", authorisation, async (req, res) => {
       try {
         console.log(req.body);
-        const {
-          description,
-          recipient_id
-        } = req.body;
-        const newFavour = await pool.query("INSERT INTO favours (user_id, description, recipient_id) VALUES ($1, $2, $3) RETURNING *", [req.user.id, description, recipient_id]);
+        const { description, recipient_id } = req.body;
+        const newFavour = await pool.query(
+          "INSERT INTO favours (user_id, description, recipient_id) VALUES ($1, $2, $3) RETURNING *",
+          [req.user.id, description, recipient_id]
+        );
 
         res.json(newFavour.rows[0]);
-
       } catch (err) {
         console.error(err.message);
       }
@@ -40,25 +40,40 @@ router.get("/", authorisation, async (req, res) => {
 
     router.put("/favours/:id", authorisation, async (req, res) => {
       try {
-        const {
-          id
-        } = req.params;
-        const {
-          description
-        } = req.body;
-        const updateFavour = await pool.query("UPDATE favours SET description = $1 WHERE favour_id = $2 AND user_id = $3 RETURNING *", [description, id, req.user.id]);
+        const { id } = req.params;
+        const { description } = req.body;
+        const updateFavour = await pool.query(
+          "UPDATE favours SET description = $1 WHERE favour_id = $2 AND user_id = $3 RETURNING *",
+          [description, id, req.user.id]
+        );
 
         if (updateFavour.rows.length === 0) {
           return res.json("this favour is not yours");
         }
         res.json("Favour updated");
-
       } catch (err) {
         console.error(err.message);
       }
     });
+    //delete a favour
 
-    //delete a favour 
+    router.delete("/favours/:id", authorisation, async (req, res) => {
+      try {
+        const { id } = req.params;
+        const deleteFavour = await pool.query(
+          "DELETE FROM favours WHERE favour_id = $1 AND user_id = $2 RETURNING *",
+          [id, req.user.id]
+        );
+
+        if (deleteFavour.rows.length === 0) {
+          return res.json("this favour is not yours");
+        }
+
+        res.json("Favor deleted");
+      } catch (err) {
+        console.error(err.message);
+      }
+    });
 
     res.json(user.rows); //eventually delete [0] in rows[0] because I want to return multiple
   } catch (err) {
