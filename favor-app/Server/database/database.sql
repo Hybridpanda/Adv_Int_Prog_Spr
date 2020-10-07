@@ -23,10 +23,10 @@ CREATE TABLE favours(
     favour_id SERIAL,
     user_id UUID,
     description VARCHAR(255) NOT NULL,
-    recipient_id VARCHAR(255),
+    recipient_id UUID NOT NULL,
     PRIMARY KEY (favour_id),
     FOREIGN KEY (user_id) REFERENCES authusers(user_id)
-)
+);
 
 --fake favor data the first value should be copied from the user id in authusers
-INSERT INTO favours (user_id, description, recipient_id) values ('', '')
+INSERT INTO favours (user_id, description, recipient_id) values ('f37180b7-bbdd-4020-924c-fd241fc27a70', 'coffee', '41482fd9-4a40-4fe2-8c58-d087b4755334');

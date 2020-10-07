@@ -7,12 +7,60 @@ router.get("/", authorisation, async (req, res) => {
     //req.user has the payload
     //res.json(req.user);
 
-    const user = await pool.query(
+    // all favours and name
+
+    /* const user = await pool.query(
       "SELECT user_name FROM authusers WHERE user_id = $1",
       [req.user.id]
-    );
+    ); */
 
-    res.json(user.rows[0]);
+
+    const user = await pool.query("SELECT a.user_name, f.favour_id, f.description, f.recipient_id from authusers AS a LEFT JOIN favours AS f ON a.user_id = f.user_id WHERE a.user_id = $1", [req.user.id]);
+
+
+    //create a favour
+
+    router.post("/favours", authorisation, async (req, res) => {
+      try {
+        console.log(req.body);
+        const {
+          description,
+          recipient_id
+        } = req.body;
+        const newFavour = await pool.query("INSERT INTO favours (user_id, description, recipient_id) VALUES ($1, $2, $3) RETURNING *", [req.user.id, description, recipient_id]);
+
+        res.json(newFavour.rows[0]);
+
+      } catch (err) {
+        console.error(err.message);
+      }
+    });
+
+    //update a favour
+
+    router.put("/favours/:id", authorisation, async (req, res) => {
+      try {
+        const {
+          id
+        } = req.params;
+        const {
+          description
+        } = req.body;
+        const updateFavour = await pool.query("UPDATE favours SET description = $1 WHERE favour_id = $2 AND user_id = $3 RETURNING *", [description, id, req.user.id]);
+
+        if (updateFavour.rows.length === 0) {
+          return res.json("this favour is not yours");
+        }
+        res.json("Favour updated");
+
+      } catch (err) {
+        console.error(err.message);
+      }
+    });
+
+    //delete a favour 
+
+    res.json(user.rows); //eventually delete [0] in rows[0] because I want to return multiple
   } catch (err) {
     console.error(err.message);
     res.status(500).send("server Error");
