@@ -15,7 +15,7 @@ router.get("/", authorisation, async (req, res) => {
     ); */
 
     const user = await pool.query(
-      "SELECT a.user_name, f.favour_id, f.description, f.recipient_email from authusers AS a LEFT JOIN favours AS f ON a.user_id = f.user_id WHERE a.user_id = $1",
+      "SELECT a.user_name, f.favour_id, f.description, f.recipient_email FROM authusers AS a LEFT JOIN favours AS f ON a.user_id = f.user_id WHERE a.user_id = $1",
       [req.user.id]
     );
 
@@ -70,6 +70,21 @@ router.get("/", authorisation, async (req, res) => {
         }
 
         res.json("Favor deleted");
+      } catch (err) {
+        console.error(err.message);
+      }
+    });
+
+    //search for a name from favors
+    router.get("/favours/search", authorisation, async (req, res) => {
+      try {
+        const { email } = req.body;
+        const searchEmail = await pool.query(
+          "SELECT a.user_name FROM authusers AS a RIGHT JOIN favours AS f ON f.recipient_email = a.user_email WHERE f.recipient_email = $1",
+          [email]
+        );
+
+        res.json(searchEmail.rows);
       } catch (err) {
         console.error(err.message);
       }
