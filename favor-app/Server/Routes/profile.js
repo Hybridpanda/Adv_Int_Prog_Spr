@@ -15,7 +15,7 @@ router.get("/", authorisation, async (req, res) => {
     ); */
 
     const user = await pool.query(
-      "SELECT a.user_name, f.favour_id, f.description, f.recipient_id from authusers AS a LEFT JOIN favours AS f ON a.user_id = f.user_id WHERE a.user_id = $1",
+      "SELECT a.user_name, f.favour_id, f.description, f.recipient_email from authusers AS a LEFT JOIN favours AS f ON a.user_id = f.user_id WHERE a.user_id = $1",
       [req.user.id]
     );
 
@@ -23,11 +23,11 @@ router.get("/", authorisation, async (req, res) => {
 
     router.post("/favours", authorisation, async (req, res) => {
       try {
-        console.log(req.body);
-        const { description, recipient_id } = req.body;
+        //console.log(req.body);
+        const { description, recipient_email } = req.body;
         const newFavour = await pool.query(
-          "INSERT INTO favours (user_id, description, recipient_id) VALUES ($1, $2, $3) RETURNING *",
-          [req.user.id, description, recipient_id]
+          "INSERT INTO favours (user_id, description, recipient_email) VALUES ($1, $2, $3) RETURNING *",
+          [req.user.id, description, recipient_email]
         );
 
         res.json(newFavour.rows[0]);

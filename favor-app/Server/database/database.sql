@@ -23,13 +23,13 @@ CREATE TABLE favours(
     favour_id SERIAL,
     user_id UUID,
     description VARCHAR(255) NOT NULL,
-    recipient_id UUID NOT NULL,
+    recipient_email VARCHAR(255) NOT NULL,
     PRIMARY KEY (favour_id),
     FOREIGN KEY (user_id) REFERENCES authusers(user_id)
 );
 
 --fake favor data the first value should be copied from the user id in authusers
-INSERT INTO favours (user_id, description, recipient_id) values ('73239eeb-9905-469a-a5ff-0821d62f2226', 'coffee', '0c08a234-ea71-43c9-91d8-e2163861f538');
+INSERT INTO favours (user_id, description, recipient_email) values ('73239eeb-9905-469a-a5ff-0821d62f2226', 'coffee', 'test@gmail.com');
 
 -- resets the counter favour_id back to 1, please only use this when theres nothing in the favours table im not sure how it will react with values already in it. I dont think we need to worry about using this much, only for development
 SELECT SETVAL((SELECT pg_get_serial_sequence('favours', 'favour_id')), 1, false);

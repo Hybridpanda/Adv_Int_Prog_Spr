@@ -18,6 +18,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import Profile from "./components/profile/profile";
 import Login from "./components/login";
 import Register from "./components/register";
+import Landing from "./components/landing";
 
 function App() {
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
@@ -63,6 +64,17 @@ function App() {
         <Router>
           <div className="container">
             <Switch>
+              <Route
+                exact
+                path="/"
+                render={(props) =>
+                  !isAuthenticated ? (
+                    <Landing {...props} />
+                  ) : (
+                    <Redirect to="/profile" />
+                  )
+                }
+              />
               <Route
                 exact
                 path="/login"

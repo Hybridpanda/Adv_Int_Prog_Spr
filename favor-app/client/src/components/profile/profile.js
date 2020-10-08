@@ -1,5 +1,9 @@
 import React, { Fragment, useState, useEffect } from "react";
-import { Container , Typography, Button } from "@material-ui/core";
+import { Container, Typography, Button } from "@material-ui/core";
+
+//components
+import InputFavour from "./favourlist/inputFavour";
+//import listFavours from "./favourlist/listFavour";
 
 const Profile = ({ setAuth }) => {
   const [name, setName] = useState("");
@@ -33,7 +37,7 @@ const Profile = ({ setAuth }) => {
     <Fragment>
       <Container maxWidth="sm">
         <Typography variant="h4">Profile {name} </Typography>
-
+        <InputFavour />
         <Button variant="contained" color="primary" onClick={(e) => logout(e)}>
           logout
         </Button>
