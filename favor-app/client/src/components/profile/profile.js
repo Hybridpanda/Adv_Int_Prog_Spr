@@ -3,10 +3,12 @@ import { Container, Typography, Button } from "@material-ui/core";
 
 //components
 import InputFavour from "./favourlist/inputFavour";
-//import listFavours from "./favourlist/listFavour";
+import ListFavours from "./favourlist/listFavour";
 
 const Profile = ({ setAuth }) => {
   const [name, setName] = useState("");
+  const [allFavours, setAllFavours] = useState([]);
+  const [favoursChange, setFavoursChange] = useState(false);
 
   async function getName() {
     try {
@@ -16,8 +18,8 @@ const Profile = ({ setAuth }) => {
       });
 
       const parseRes = await response.json();
-
-      setName(parseRes.user_name);
+      setAllFavours(parseRes);
+      setName(parseRes[0].user_name);
     } catch (err) {
       console.error(err.message);
     }
@@ -31,16 +33,21 @@ const Profile = ({ setAuth }) => {
 
   useEffect(() => {
     getName();
-  }, []);
+    setFavoursChange(false);
+  }, [favoursChange]);
 
   return (
     <Fragment>
-      <Container maxWidth="sm">
+      <Container maxWidth="md">
         <Typography variant="h4">Profile {name} </Typography>
-        <InputFavour />
         <Button variant="contained" color="primary" onClick={(e) => logout(e)}>
           logout
         </Button>
+        <InputFavour setFavoursChange={setFavoursChange} />
+        <ListFavours
+          allFavours={allFavours}
+          setFavoursChange={setFavoursChange}
+        />
       </Container>
     </Fragment>
   );

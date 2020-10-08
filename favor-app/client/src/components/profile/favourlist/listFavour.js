@@ -1,8 +1,18 @@
 import React, { Fragment, useState, useEffect } from "react";
-import editFavour from "./editFavour";
+import EditFavour from "./editFavour";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Button,
+} from "@material-ui/core";
 
-const listFavours = ({ allFavours, setFavourChange }) => {
-  console.log(allFavours);
+const ListFavours = ({ allFavours, setFavoursChange }) => {
+  //console.log(allFavours);
   const [favours, setFavours] = useState([]); //empty array
 
   //delete favour function
@@ -20,62 +30,53 @@ const listFavours = ({ allFavours, setFavourChange }) => {
     }
   }
 
-  // async function getfavours() {
-  //   const res = await fetch("http://localhost:5000/favours");
-
-  //   const favoursArray = await res.json();
-
-  //   setFavours(favoursArray);
-  // }
-
   useEffect(() => {
     setFavours(allFavours);
   }, [allFavours]);
 
-  console.log(favours);
-
+  //console.log(favours);
   return (
     <Fragment>
       {" "}
-      <table>
-        <thead>
-          <tr>
-            <th>Description</th>
-            <th>Edit</th>
-            <th>Delete</th>
-          </tr>
-        </thead>
-        <tbody>
-          {/*<tr>
-            <td>John</td>
-            <td>Doe</td>
-            <td>john@example.com</td>
-          </tr> */}
-
-          {favours.length !== 0 &&
-            favours[0].todo_id !== null &&
-            favours.map((favour) => (
-              <tr key={favour.favour_id}>
-                <td>{favour.description}</td>
-                <td>
-                  <editFavour
-                    favour={favour}
-                    setFavourChange={setFavourChange}
-                  />
-                </td>
-                <td>
-                  <button
-                    onClick={() => deleteFavour(favour.favour_id)}
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
-        </tbody>
-      </table>
+      <TableContainer component={Paper}>
+        <Table aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell align="center">Description</TableCell>
+              <TableCell align="center">Recipient email</TableCell>
+              <TableCell align="center">Edit</TableCell>
+              <TableCell align="center">Delete</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {favours.length !== 0 &&
+              favours[0].favour_id !== null &&
+              favours.map((favour) => (
+                <TableRow key={favour.favour_id}>
+                  <TableCell>{favour.description}</TableCell>
+                  <TableCell>{favour.recipient_email}</TableCell>
+                  <TableCell>
+                    <EditFavour
+                      favour={favour}
+                      setFavoursChange={setFavoursChange}
+                    />
+                  </TableCell>
+                  <TableCell>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={() => deleteFavour(favour.favour_id)}
+                    >
+                      Delete
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </Fragment>
   );
 };
 
-export default listFavours;
+export default ListFavours;

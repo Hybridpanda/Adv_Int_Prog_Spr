@@ -1,93 +1,140 @@
 import React, { Fragment, useState } from "react";
+import {
+  withStyles,
+  Button,
+  TextField,
+  Dialog,
+  DialogContentText,
+  IconButton,
+  Typography,
+} from "@material-ui/core/";
+import MuiDialogActions from "@material-ui/core/DialogActions";
+import MuiDialogContent from "@material-ui/core/DialogContent";
+import MuiDialogTitle from "@material-ui/core/DialogTitle";
+import CloseIcon from "@material-ui/icons/Close";
 
-const editFavour = ({ favour, setFavourChange }) => {
+const EditFavour = ({ favour, setFavoursChange }) => {
   //editText function
   const [description, setDescription] = useState("");
 
+  const [open, setOpen] = useState(false);
+
+  const styles = (theme) => ({
+    root: {
+      margin: 0,
+      padding: theme.spacing(2),
+    },
+    closeButton: {
+      position: "absolute",
+      right: theme.spacing(1),
+      top: theme.spacing(1),
+      color: theme.palette.grey[500],
+    },
+  });
+
+  const DialogTitle = withStyles(styles)((e) => {
+    const { children, classes, onClose, ...other } = e;
+    return (
+      <MuiDialogTitle disableTypography className={classes.root} {...other}>
+        <Typography variant="h6">{children}</Typography>
+        {onClose ? (
+          <IconButton
+            aria-label="close"
+            className={classes.closeButton}
+            onClick={onClose}
+          >
+            <CloseIcon />
+          </IconButton>
+        ) : null}
+      </MuiDialogTitle>
+    );
+  });
+
+  const DialogContent = withStyles((theme) => ({
+    root: {
+      padding: theme.spacing(2),
+    },
+  }))(MuiDialogContent);
+
+  const DialogActions = withStyles((theme) => ({
+    root: {
+      margin: 0,
+      padding: theme.spacing(1),
+    },
+  }))(MuiDialogActions);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   const editText = async (id) => {
+    //e.preventDefault();
     try {
-      const body = { description };
+      const formbody = { description };
 
       const myHeaders = new Headers();
 
       myHeaders.append("Content-Type", "application/json");
       myHeaders.append("token", localStorage.token);
 
-      await fetch("http://localhost:5000/profile/favours/${id}", {
+      await fetch(`http://localhost:5000/profile/favours/${id}`, {
         method: "PUT",
         headers: myHeaders,
-        body: JSON.stringify(body),
+        body: JSON.stringify(formbody),
       });
 
-      setFavourChange(true);
-
+      setFavoursChange(true);
+      handleClose();
       // window.location = "/";
     } catch (err) {
       console.error(err.message);
     }
   };
+
   return (
     <Fragment>
-      <button
+      <Button
         type="button"
-        className="btn btn-warning"
-        data-toggle="modal"
-        data-target={"#id${favour.favour_id}"}
+        variant="outlined"
+        color="primary"
+        onClick={handleClickOpen}
       >
         Edit
-      </button>
-      {/* id = "id21"*/}
-      <div
-        className="modal"
-        id={"id${favour.favour_id}"}
-        onClick={() => setDescription(favour.description)}
+      </Button>
+      <Dialog
+        onClose={handleClose}
+        aria-labelledby="customized-dialog-title"
+        open={open}
       >
-        <div className="modal-dialog">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h4 className="modal-title">Edit favour</h4>
-              <button
-                type="button"
-                className="close"
-                data-dismiss="modal"
-                onClick={() => setDescription(favour.description)}
-              >
-                &times;
-              </button>
-            </div>
+        <DialogTitle id="customized-dialog-title" onClose={handleClose}>
+          Edit favour
+        </DialogTitle>
 
-            <div className="modal-body">
-              <input
-                type="text"
-                className="form-control"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-              />
-            </div>
+        <DialogContent>
+          <DialogContentText> Edit this current favor</DialogContentText>
+          <TextField
+            autoFocus
+            margin="dense"
+            type="text"
+            name="edit_favour"
+            defaultValue=""
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          />
+        </DialogContent>
 
-            <div className="modal-footer">
-              <button
-                type="button"
-                className="btn btn-warning"
-                data-dismiss="modal"
-                onClick={() => editText(favour.favour_id)}
-              >
-                Edit
-              </button>
-              <button
-                type="button"
-                className="btn btn-danger"
-                data-dismiss="modal"
-                onClick={() => setDescription(favour.description)}
-              >
-                Close
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+        <DialogActions>
+          <Button onClick={() => editText(favour.favour_id)}>
+            Edit
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Fragment>
   );
 };
 
-export default editFavour;
+export default EditFavour;

@@ -1,17 +1,20 @@
 import React, { Fragment, useState } from "react";
 import { TextField, Typography, Button } from "@material-ui/core";
 
-const InputFavor = ({ setFavourChange }) => {
-  const [inputs, setInputs] = useState({
-    description: "",
-    recipient_email: "",
-  });
+const defaultValues = {
+  description: "",
+  recipient_email: "",
+};
+
+const InputFavor = ({ setFavoursChange }) => {
+  const [inputs, setInputs] = useState({ defaultValues });
 
   const { description, recipient_email } = inputs;
 
   const onChange = (e) => {
     setInputs({ ...inputs, [e.target.name]: e.target.value });
   };
+
   const onSubmitForm = async (e) => {
     e.preventDefault();
 
@@ -29,17 +32,19 @@ const InputFavor = ({ setFavourChange }) => {
         body: JSON.stringify(formbody),
       });
 
-      const parseResponse = await response.json();
+      const parseRes = await response.json();
+      //console.log(parseResponse);
 
-      console.log(parseResponse);
+      if (parseRes) {
+        setFavoursChange(true);
+      }
 
-      setFavourChange(true);
       // window.location = "/";
     } catch (err) {
       console.error(err.message);
     }
   };
-  return [
+  return (
     <Fragment>
       <Typography varient="h4">Input Favour</Typography>
       <form onSubmit={onSubmitForm}>
@@ -58,6 +63,7 @@ const InputFavor = ({ setFavourChange }) => {
           type="recpient_email"
           name="recipient_email"
           placeholder="add recipient email"
+          required={true}
           value={recipient_email}
           onChange={(e) => onChange(e)}
         />
@@ -71,8 +77,8 @@ const InputFavor = ({ setFavourChange }) => {
           Add
         </Button>
       </form>
-    </Fragment>,
-  ];
+    </Fragment>
+  );
 };
 
 export default InputFavor;
