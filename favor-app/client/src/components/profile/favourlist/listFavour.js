@@ -18,14 +18,12 @@ const ListFavours = ({ allFavours, setFavoursChange }) => {
 
   // get name from email
   async function getEmail() {
-    const body = { email };
     try {
       const response = await fetch(
         "http://localhost:5000/profile/favours/search",
         {
           method: "POST",
           headers: { token: localStorage.token },
-          body: JSON.stringify(body),
         }
       );
 
