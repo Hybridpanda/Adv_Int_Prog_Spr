@@ -14,26 +14,6 @@ import {
 const ListFavours = ({ allFavours, setFavoursChange }) => {
   //console.log(allFavours);
   const [favours, setFavours] = useState([]); //empty array
-  const [name, setEmail] = useState("");
-
-  // get name from email
-  async function getEmail() {
-    try {
-      const response = await fetch(
-        "http://localhost:5000/profile/favours/search",
-        {
-          method: "POST",
-          headers: { token: localStorage.token },
-        }
-      );
-
-      const parseRes = await response.json();
-      console.log(parseRes);
-      setEmail(parseRes);
-    } catch (err) {
-      console.error(err.message);
-    }
-  }
   //delete favour function
   async function deleteFavour(id) {
     try {
@@ -53,7 +33,6 @@ const ListFavours = ({ allFavours, setFavoursChange }) => {
   }, [allFavours]);
 
   useEffect(() => {
-    getEmail();
     setFavoursChange(false);
   }, [setFavoursChange]);
   //console.log(favours);
@@ -76,7 +55,7 @@ const ListFavours = ({ allFavours, setFavoursChange }) => {
               favours.map((favour) => (
                 <TableRow key={favour.favour_id}>
                   <TableCell>{favour.description}</TableCell>
-                  <TableCell>{name}</TableCell>
+                  <TableCell>{favour.recipient_email}</TableCell>
                   <TableCell>
                     <EditFavour
                       favour={favour}

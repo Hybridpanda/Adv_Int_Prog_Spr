@@ -11,7 +11,7 @@ router.get("/", authorisation, async (req, res) => {
 
     /* const user = await pool.query(
       "SELECT user_name FROM authusers WHERE user_id = $1",
-      [req.user.id]
+      [req.user_id]
     ); */
 
     const user = await pool.query(
@@ -75,20 +75,7 @@ router.get("/", authorisation, async (req, res) => {
       }
     });
 
-    //search for a name from favors
-    router.get("/favours/search", authorisation, async (req, res) => {
-      try {
-        const { email } = req.body;
-        const searchEmail = await pool.query(
-          "SELECT a.user_name FROM authusers AS a RIGHT JOIN favours AS f ON f.recipient_email = a.user_email WHERE f.recipient_email = $1",
-          [email]
-        );
-
-        res.json(searchEmail.rows);
-      } catch (err) {
-        console.error(err.message);
-      }
-    });
+    //show the favour owed to to the other person
 
     res.json(user.rows); //eventually delete [0] in rows[0] because I want to return multiple
   } catch (err) {
