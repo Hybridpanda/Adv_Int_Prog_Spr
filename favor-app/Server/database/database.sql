@@ -1,7 +1,7 @@
 CREATE DATABASE favorapp; -- I need to change the name to favourapp, favor is american variant.
 -- go into database \c ...
 -- set extension https://www.xtuple.com/knowledge/how-do-i-install-uuid-ossp
--- create extension if not exists "uuid-ossp";
+-- *** create extension if not exists "uuid-ossp";
 -- I didnt have that primary key in the bottom as its in the user_id already
 CREATE TABLE authusers(
     user_id uuid DEFAULT uuid_generate_v4(),

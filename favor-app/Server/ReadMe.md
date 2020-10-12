@@ -13,6 +13,7 @@ press enter until you get to the password and input your password
 \l will bring up all the databases, there are some admin databases already installed.
 go to database.sql in database folder.
 copy paste the create database line and then to go into it \c
+then copy the commented code with *** to generate uuids
 then copy paste the create table authusers.
 you should now have a table of authusers.
 to check \d+
