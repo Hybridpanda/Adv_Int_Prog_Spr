@@ -76,7 +76,7 @@ router.get("/", authorisation, async (req, res) => {
     });
 
     //show the favour owed to to the other person
-    router.get("/favours/recipient", authorisation, async (req, res) => {
+    router.post("/favours/recipient", authorisation, async (req, res) => {
       try {
         const owed = await pool.query(
           "SELECT * FROM favours AS f WHERE f.recipient_email = $1",
