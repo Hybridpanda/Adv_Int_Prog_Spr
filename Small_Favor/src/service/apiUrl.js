@@ -3,18 +3,18 @@ import { message } from "antd";
 const HISTORY = "http://39.97.182.43:8010/art/api/action/";
 
 /**
- * 定义接口地址
+ * the address of the port
  */
 const Api = {
-	login: HISTORY + "login/login", //登陆
-	getUserInfo: HISTORY + "user/" //接口2
+	login: HISTORY + "login/login", //login
+	getUserInfo: HISTORY + "user/" //port 2
 };
 
 
 export default Api;
 
 /**
- * 处理接口的返回值status
+ * deal with the return status
  * @param {string} status 
  * 
  */
