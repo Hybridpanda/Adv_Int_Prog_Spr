@@ -76,7 +76,17 @@ router.get("/", authorisation, async (req, res) => {
     });
 
     //show the favour owed to to the other person
-
+    router.get("/favours/recipient", authorisation, async (req, res) => {
+      try {
+        const owed = await pool.query(
+          "SELECT * FROM favours AS f WHERE f.recipient_email = $1",
+          [req.body]
+        );
+        console.log(owed);
+      } catch (err) {
+        console.error(err.message);
+      }
+    });
     res.json(user.rows); //eventually delete [0] in rows[0] because I want to return multiple
   } catch (err) {
     console.error(err.message);
