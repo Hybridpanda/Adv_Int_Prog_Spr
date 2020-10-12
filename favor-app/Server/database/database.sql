@@ -15,7 +15,7 @@ CREATE TABLE authusers(
 INSERT INTO authusers (user_name, user_email, user_password) VALUES ('hello', 'hello@gmail.com', 'cat123');
 INSERT INTO authusers (user_name, user_email, user_password) VALUES ('test', 'test@gmail.com', 'dog123');
 
--- if your email is not unique
+-- * if your email is not unique *
 ALTER TABLE authusers ADD CONSTRAINT email_unique UNIQUE (user_email);
 
 -- I need to change this to be able to make the description accept one of 5 things, and maybe accept an image, and maybe a boolean of completion, and also things relating to requests, im not sure atm
