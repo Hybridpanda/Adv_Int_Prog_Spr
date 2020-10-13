@@ -147,14 +147,15 @@ router.get("/", authorisation, async (req, res) => {
           email
         } = req.body;
         const owed = await pool.query(
-          "SELECT * FROM favours AS f WHERE f.recipient_email = $1",
+          "SELECT user_id, description, recipient_id FROM favours WHERE recipient_email = $1",
           [email]
         );
-        console.log(owed);
+        res.json(owed.rows);
       } catch (err) {
         console.error(err.message);
       }
     });
+
     res.json(user.rows); //eventually delete [0] in rows[0] because I want to return multiple
   } catch (err) {
     console.error(err.message);
