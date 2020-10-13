@@ -98,6 +98,21 @@ router.get("/", authorisation, async (req, res) => {
       };
 
     });
+    // return a name from id
+    router.post("/api/getName", authorisation, async (req, res) => {
+      try {
+        const {
+          id
+        } = req.body;
+        const parseName = await pool.query(
+          "SELECT user_name FROM authusers WHERE user_id = $1", [id]
+        );
+        res.json(parseName.rows[0]);
+      } catch (err) {
+        console.error(err.message)
+      };
+
+    });
 
     //return an email from an Id
     router.post("/api/getEmail", authorisation, async (req, res) => {
@@ -116,34 +131,36 @@ router.get("/", authorisation, async (req, res) => {
     });
 
     //return favour if recipient id is the same as the inputed email
-    router.post("/favours/return"), authorisation, async (req, res) => {
+    router.post("/favours/return", authorisation, async (req, res) => {
       try {
-
+        const recipientFavour = await pool.query(
+          "SELECT favour_id, user_id, description, recipient_email FROM favours WHERE recipient_id = $1", [req.user.id]);
+        res.json(recipientFavour.rows);
       } catch (err) {
-        console.error(err.message)
+        console.error(err.message);
       }
     });
 
-  //show the favour owed to to the other person
-  router.post("/favours/recipient", authorisation, async (req, res) => {
-    try {
-      const {
-        email
-      } = req.body;
-      const owed = await pool.query(
-        "SELECT * FROM favours AS f WHERE f.recipient_email = $1",
-        [email]
-      );
-      console.log(owed);
-    } catch (err) {
-      console.error(err.message);
-    }
-  });
-  res.json(user.rows); //eventually delete [0] in rows[0] because I want to return multiple
-} catch (err) {
-  console.error(err.message);
-  res.status(500).send("server Error");
-}
+    //show the favour owed to to the other person
+    router.post("/favours/recipient", authorisation, async (req, res) => {
+      try {
+        const {
+          email
+        } = req.body;
+        const owed = await pool.query(
+          "SELECT * FROM favours AS f WHERE f.recipient_email = $1",
+          [email]
+        );
+        console.log(owed);
+      } catch (err) {
+        console.error(err.message);
+      }
+    });
+    res.json(user.rows); //eventually delete [0] in rows[0] because I want to return multiple
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("server Error");
+  }
 });
 
 module.exports = router;
