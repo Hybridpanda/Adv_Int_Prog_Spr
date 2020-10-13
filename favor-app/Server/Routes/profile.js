@@ -111,7 +111,6 @@ router.get("/", authorisation, async (req, res) => {
       } catch (err) {
         console.error(err.message)
       };
-
     });
 
     //return an email from an Id
