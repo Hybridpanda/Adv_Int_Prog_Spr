@@ -54,15 +54,15 @@ const ListFavours = ({ allFavours, setFavoursChange }) => {
               favours[0].favour_id !== null &&
               favours.map((favour) => (
                 <TableRow key={favour.favour_id}>
-                  <TableCell>{favour.description}</TableCell>
-                  <TableCell>{favour.recipient_email}</TableCell>
-                  <TableCell>
+                  <TableCell align="center">{favour.description}</TableCell>
+                  <TableCell align="center">{favour.recipient_email}</TableCell>
+                  <TableCell align="center">
                     <EditFavour
                       favour={favour}
                       setFavoursChange={setFavoursChange}
                     />
                   </TableCell>
-                  <TableCell>
+                  <TableCell align="center">
                     <Button
                       variant="contained"
                       color="primary"

@@ -1,5 +1,12 @@
 import React, { Fragment, useState, useEffect } from "react";
-import { Container, Typography, Button } from "@material-ui/core";
+import {
+  AppBar,
+  Container,
+  Typography,
+  Tab,
+  Button,
+} from "@material-ui/core";
+import { TabContext, TabList, TabPanel } from "@material-ui/lab";
 
 //components
 import InputFavour from "./favourlist/inputFavour";
@@ -9,6 +16,7 @@ const Profile = ({ setAuth }) => {
   const [name, setName] = useState("");
   const [allFavours, setAllFavours] = useState([]);
   const [favoursChange, setFavoursChange] = useState(false);
+  const [value, setValue] = React.useState("1");
 
   async function getName() {
     try {
@@ -31,6 +39,10 @@ const Profile = ({ setAuth }) => {
     setAuth(false);
   };
 
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
   useEffect(() => {
     getName();
     setFavoursChange(false);
@@ -43,11 +55,25 @@ const Profile = ({ setAuth }) => {
         <Button variant="contained" color="primary" onClick={(e) => logout(e)}>
           logout
         </Button>
-        <InputFavour setFavoursChange={setFavoursChange} />
-        <ListFavours
-          allFavours={allFavours}
-          setFavoursChange={setFavoursChange}
-        />
+        <TabContext value={value}>
+          <AppBar position="static">
+            <TabList
+              value={value}
+              onChange={handleChange}
+              aria-label="simple tabs example"
+            >
+              <Tab label="Favours Owed" value="1" />
+              <Tab label="Favours Owing" value="2" />
+            </TabList>
+          </AppBar>
+          <TabPanel value="1">
+            <InputFavour setFavoursChange={setFavoursChange} />
+            <ListFavours
+              allFavours={allFavours}
+              setFavoursChange={setFavoursChange}
+            />
+          </TabPanel>
+        </TabContext>
       </Container>
     </Fragment>
   );
