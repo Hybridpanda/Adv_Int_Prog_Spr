@@ -140,7 +140,7 @@ router.get("/", authorisation, async (req, res) => {
         console.error(err.message);
       }
     });
-
+    //for deleting from owing
     router.delete("/favours/remove/:id", authorisation, async (req, res) => {
       try {
         const { id } = req.params;
@@ -154,6 +154,7 @@ router.get("/", authorisation, async (req, res) => {
           return res.json("Not your favour");
         }
         res.json("Favour Deleted");
+        
       } catch (err) {
         console.error(err.message);
       }

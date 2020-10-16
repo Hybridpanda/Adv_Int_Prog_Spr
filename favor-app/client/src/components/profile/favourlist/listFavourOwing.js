@@ -13,7 +13,7 @@ import {
 const ListFavoursOwing = () => {
   const [recipients, setRecipient] = useState([]);
   const [favoursChange, setFavoursChange] = useState(false);
-  
+
   async function getOwing() {
     try {
       const response = await fetch("http://localhost:5000/profile/recipient", {
@@ -28,13 +28,14 @@ const ListFavoursOwing = () => {
       console.error(err.message);
     }
   }
+
   async function deleteOwingFavor(recipient_email, id) {
     const recipientOwed = recipient_email;
     try {
       await fetch(`http://localhost:5000/profile/favours/remove/${id}`, {
         method: "DELETE",
         headers: { token: localStorage.token },
-        body: JSON.stringify(recipientOwed),
+        body: recipientOwed,
       });
 
       setRecipient(
@@ -44,9 +45,11 @@ const ListFavoursOwing = () => {
       console.error(err.message);
     }
   }
+
   useEffect(() => {
     getOwing();
   }, []);
+  
   useEffect(() => {
     setFavoursChange(false);
   }, [favoursChange]);
