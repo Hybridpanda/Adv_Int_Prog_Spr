@@ -34,7 +34,7 @@ CREATE TABLE favours(
 INSERT INTO favours (user_id, description, recipient_id, recipient_email) values ('73239eeb-9905-469a-a5ff-0821d62f2226', 'cake', '0c08a234-ea71-43c9-91d8-e2163861f538', 'test@gmail.com');
 
 INSERT INTO favours (user_id, description, recipient_id, recipient_email)
-values ('0c08a234-ea71-43c9-91d8-e2163861f538', 'doughnut', '73239eeb-9905-469a-a5ff-0821d62f2226', 'test@gmail.com');
+values ('0c08a234-ea71-43c9-91d8-e2163861f538', 'muffin', '73239eeb-9905-469a-a5ff-0821d62f2226', 'hello@yahoo.com');
 
 -- resets the counter favour_id back to 1, please only use this when theres nothing in the favours table im not sure how it will react with values already in it. I dont think we need to worry about using this much, only for development
 SELECT SETVAL((SELECT pg_get_serial_sequence('favours', 'favour_id')), 1, false);
