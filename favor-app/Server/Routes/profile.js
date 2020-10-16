@@ -141,16 +141,10 @@ router.get("/", authorisation, async (req, res) => {
     });
 
     //show the favour owed to to the other person
-    router.post("/favours/recipient", authorisation, async (req, res) => {
+    router.get("/recipient", authorisation, async (req, res) => {
       try {
-        const {
-          email
-        } = req.body;
-        const owed = await pool.query(
-          "SELECT user_id, description, recipient_id FROM favours WHERE recipient_email = $1",
-          [email]
-        );
-        res.json(owed.rows);
+        const recipient = await pool.query("SELECT user_id, description, recipient_email FROM favours WHERE recipient_id = $1", [req.user.id])
+        res.json(recipient.rows[0]);
       } catch (err) {
         console.error(err.message);
       }
