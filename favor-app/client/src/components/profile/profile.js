@@ -11,7 +11,7 @@ import { TabContext, TabList, TabPanel } from "@material-ui/lab";
 //components
 import InputFavour from "./favourlist/inputFavour";
 import ListFavours from "./favourlist/listFavour";
-import ListFavoursOwing from "./favourlist/listFavourOwing";
+import ListFavoursOwing from "./favourlist/listOwingFavours";
 
 const Profile = ({ setAuth }) => {
   const [name, setName] = useState("");
