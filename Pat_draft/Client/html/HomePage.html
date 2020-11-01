@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="../CSS/homeStyle.css">
+</head>
+
+<body>
+    <header>
+        <h2 class="title">A tracking of IOUs</h2>
+    </header>
+    <h1>Our Favor App</h1>
+    <p>this is our favor app home page</p>
+    <!-- form to insert information -->
+    <form class="requestTab">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name">
+        </br>
+        <label for="recipient">recipient:</label>
+        <input type="text" id="recipient" name="recipient">
+        </br>
+        <label for="favor">favor:</label>
+        <select id="favorSelect" name="favorSelect">
+            <option value="coffee">Coffee</option>
+            <option value="tea">Tea</option>
+        </select>
+        </br>
+        <button>send</button>
+    </form>
+    <!-- show the history -->
+    <table id="table">
+        <tr>
+            <th>Name</th>
+            <th>Favor</th>
+            <th>Recipient</th>
+            <th>completed</th>
+        </tr>
+    </table>
+
+    <script src="../JS/clientHome.js"></script>
+</body>
+
+</html>
