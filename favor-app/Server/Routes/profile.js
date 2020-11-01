@@ -20,16 +20,28 @@ router.get("/", authorisation, async (req, res) => {
     );
     //create a favour
 
-    router.post("/favours", authorisation, async (req, res) => {
+
+    var cb0 = async function (req, res, next) {
+      const recipient_email = req.body;
+      const id = await pool.query(
+          "SELECT user_id FROM authusers WHERE user_email = $1",
+          [recipient_email]
+      );
+      res.json(id)
+      next();
+    }
+
+    router.post("/favours", authorisation, [cb0], async (req, res) => {
       try {
         //console.log(req.body);
         const {
           description,
           recipient_email
         } = req.body;
+
         const newFavour = await pool.query(
-          "INSERT INTO favours (user_id, description,recipient_id, recipient_email) VALUES ($1, $2, $3, $4) RETURNING *",
-          [req.user.id, description, recipient_id, recipient_email]
+          "INSERT INTO favours (user_id, description, recipient_email) VALUES ($1, $2, $3, $4) RETURNING *",
+          [req.user.id, description, recipient_email]
         );
 
         res.json(newFavour.rows[0]);
