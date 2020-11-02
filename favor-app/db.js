@@ -2,11 +2,11 @@ const Pool = require("pg").Pool;
 require("dotenv").config();
 
 const devConfig = {
-  user: process.env.PG_USER,
+  user: "postgres",
   password: process.env.PG_PASSWORD,
-  host: process.env.PG_HOST,
-  port: process.env.PG_PORT,
-  database: process.env.DATABASE,
+  host: "localhost",
+  port: 5432,
+  database: favorapp,
 }
 
 const proConfig = {
