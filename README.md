@@ -1,7 +1,7 @@
 # Adv_Int_Prog_Spr
-Advanced Internet Programming- Davit, Jay, Pat
+Advanced Internet Programming- Pat
 Spring 2020
-this is going to be an application made with React, node, javascript, express, postgres and a cloud server.
+this is going to be an application made with React, node, javascript, express and postgres.
 
 I couldnt unfortunently get the app to work on heroku, so the current working way to get it up and running is to use postgres to create two databases, one called authusers and another called favours.
 then create an .env file with { jwtSecret, PG_PASSWORD = "password"}
