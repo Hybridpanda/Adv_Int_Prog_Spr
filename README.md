@@ -9,4 +9,4 @@ then create an .env file with { jwtSecret, PG_PASSWORD = "password"}
 there is instructions left by me to jay a team member before he left the team, that go more in depth, they can be found in another readme but with the tile read-Jay.
 
 installing the packages for the server side and client, and then following the more in depth steps if there is any issues, I wish I was able to get heroku up and running, but I watched a handful of tutorials online and most had different methods.
-fo
+as far as I have trsted, users can be securely created and securely logged in, they can create favors and edit their own, and recipients can see the favours owed and delete if it is done.
