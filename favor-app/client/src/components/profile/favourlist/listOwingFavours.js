@@ -23,24 +23,20 @@ const ListFavoursOwing = () => {
       const parseRes = await response.json();
       //console.log(parseRes);
       setRecipient(parseRes);
-      //setRecipient(parseRes);
     } catch (err) {
       console.error(err.message);
     }
   }
 
-  async function deleteOwingFavor(recipient_email, id) {
-    const recipientOwed = recipient_email;
+  async function deleteOwingFavor(id) {
     try {
-      await fetch(`http://localhost:5000/profile/favours/remove/${id}`, {
+      await fetch(`http://localhost:5000/profile/recipient/remove/${id}`, {
         method: "DELETE",
         headers: { token: localStorage.token },
-        body: recipientOwed,
       });
 
       setRecipient(
-        recipients.filter((recipient) => recipient.favour_id !== id)
-      );
+        recipients.filter((recipient) => recipient.recipient_id !== id));
     } catch (err) {
       console.error(err.message);
     }
@@ -70,7 +66,7 @@ const ListFavoursOwing = () => {
             {recipients.length !== 0 &&
               recipients[0].user_id !== null &&
               recipients.map((recipient) => (
-                <TableRow key={recipient.favour_id}>
+                <TableRow key={recipient.recipient_id}>
                   <TableCell align="center">{recipient.user_id}</TableCell>
                   <TableCell align="center">{recipient.description}</TableCell>
                   <TableCell align="center">
@@ -78,7 +74,7 @@ const ListFavoursOwing = () => {
                       variant="contained"
                       color="primary"
                       onClick={() =>
-                        deleteOwingFavor(recipient.user_id, recipient.favour_id)
+                        deleteOwingFavor(recipient.recipient_id)
                       }
                     >
                       Delete
