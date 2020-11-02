@@ -15,7 +15,7 @@ router.get("/", authorisation, async (req, res) => {
     ); */
 
     const user = await pool.query(
-      "SELECT a.user_name, f.favour_id, f.description, f.recipient_id, f.recipient_email FROM authusers AS a LEFT JOIN favours AS f ON a.user_id = f.user_id WHERE a.user_id = $1",
+      "SELECT a.user_name, f.favour_id, f.description, f.recipient_email FROM authusers AS a LEFT JOIN favours AS f ON a.user_id = f.user_id WHERE a.user_id = $1",
       [req.user.id]
     );
     //create a favour
@@ -23,15 +23,13 @@ router.get("/", authorisation, async (req, res) => {
     router.post("/favours", authorisation, async (req, res) => {
       try {
         //console.log(req.body);
-        //const id;
         const {
           description,
           recipient_email
         } = req.body;
-        
         const newFavour = await pool.query(
-          "INSERT INTO favours (user_id, description, recipient_email) VALUES ($1, $2, $3) RETURNING *",
-          [req.user.id, description, recipient_email]
+            "INSERT INTO favours (user_id, description, recipient_email) VALUES ($1, $2, $3) RETURNING *",
+            [req.user.id, description, recipient_email]
         );
 
         res.json(newFavour.rows);
@@ -132,25 +130,12 @@ router.get("/", authorisation, async (req, res) => {
       }
     });
 
-    //return favour if recipient id is the same as the inputed email
-    router.post("/favours/return", authorisation, async (req, res) => {
-      try {
-        const recipientFavour = await pool.query(
-          "SELECT favour_id, user_id, description, recipient_email FROM favours WHERE recipient_id = $1",
-          [req.user.id]
-        );
-        res.json(recipientFavour.rows);
-      } catch (err) {
-        console.error(err.message);
-      }
-    });
-
-
     //show the favour owed to to the other person
     router.get("/recipient", authorisation, async (req, res) => {
       try {
+        //SELECT a.user_name, f.favour_id, f.description, f.recipient_email FROM authusers AS a LEFT JOIN favours AS f ON a.user_id = f.user_id WHERE a.user_id = $1
         const recipient = await pool.query(
-          "SELECT user_id, favour_id, description, recipient_id, recipient_email FROM favours WHERE recipient_id = $1",
+          "SELECT f.user_id, f.favour_id, f.description, f.recipient_email FROM favours as F INNER JOIN authusers AS a ON a.user_id = $1 WHERE f.recipient_email = a.user_email",
           [req.user.id]
         );
         res.json(recipient.rows);
@@ -164,8 +149,8 @@ router.get("/", authorisation, async (req, res) => {
       try {
         const { id } = req.params;
         const deleteOwing = await pool.query(
-          "DELETE FROM favours WHERE favour_id = $1 AND recipient_id = $2 RETURNING *",
-          [id, req.user.id]
+          "DELETE FROM favours WHERE favour_id = $1 RETURNING *",
+          [id]
         );
 
         if (deleteOwing.rows.length === 0) {

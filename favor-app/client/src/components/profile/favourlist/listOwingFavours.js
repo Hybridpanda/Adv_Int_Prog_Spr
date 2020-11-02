@@ -36,7 +36,7 @@ const ListFavoursOwing = () => {
       });
 
       setRecipient(
-        recipients.filter((recipient) => recipient.recipient_id !== id));
+        recipients.filter((recipient) => recipient.favour_id !== id));
     } catch (err) {
       console.error(err.message);
     }
@@ -66,7 +66,7 @@ const ListFavoursOwing = () => {
             {recipients.length !== 0 &&
               recipients[0].user_id !== null &&
               recipients.map((recipient) => (
-                <TableRow key={recipient.recipient_id}>
+                <TableRow key={recipient.favour_id}>
                   <TableCell align="center">{recipient.user_id}</TableCell>
                   <TableCell align="center">{recipient.description}</TableCell>
                   <TableCell align="center">
@@ -74,7 +74,7 @@ const ListFavoursOwing = () => {
                       variant="contained"
                       color="primary"
                       onClick={() =>
-                        deleteOwingFavor(recipient.recipient_id)
+                        deleteOwingFavor(recipient.favour_id)
                       }
                     >
                       Delete
