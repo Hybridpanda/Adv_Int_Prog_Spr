@@ -21,7 +21,7 @@ const Profile = ({ setAuth }) => {
 
   async function getName() {
     try {
-      const response = await fetch("http://localhost:5000/profile", {
+      const response = await fetch("profile", {
         method: "GET",
         headers: { token: localStorage.token },
       });

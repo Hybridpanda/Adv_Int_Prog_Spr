@@ -81,7 +81,7 @@ const EditFavour = ({ favour, setFavoursChange }) => {
       myHeaders.append("Content-Type", "application/json");
       myHeaders.append("token", localStorage.token);
 
-      await fetch(`http://localhost:5000/profile/favours/${id}`, {
+      await fetch(`profile/favours/${id}`, {
         method: "PUT",
         headers: myHeaders,
         body: JSON.stringify(formbody),

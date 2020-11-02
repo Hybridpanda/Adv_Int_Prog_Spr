@@ -16,7 +16,7 @@ const ListFavoursOwing = () => {
 
   async function getOwing() {
     try {
-      const response = await fetch("http://localhost:5000/profile/recipient", {
+      const response = await fetch("profile/recipient", {
         method: "GET",
         headers: { token: localStorage.token },
       });
@@ -30,7 +30,7 @@ const ListFavoursOwing = () => {
 
   async function deleteOwingFavor(id) {
     try {
-      await fetch(`http://localhost:5000/profile/recipient/remove/${id}`, {
+      await fetch(`profile/recipient/remove/${id}`, {
         method: "DELETE",
         headers: { token: localStorage.token },
       });

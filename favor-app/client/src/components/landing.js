@@ -24,7 +24,7 @@ const Landing = () => {
 
   async function getBoard() {
     try {
-      const response = await fetch("http://localhost:5000/", {
+      const response = await fetch("/", {
         method: "GET",
         headers: { token: localStorage.token },
       });

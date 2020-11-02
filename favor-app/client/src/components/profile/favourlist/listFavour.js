@@ -17,7 +17,7 @@ const ListFavours = ({ allFavours, setFavoursChange }) => {
   //delete favour function
   async function deleteFavour(id) {
     try {
-      await fetch(`http://localhost:5000/profile/favours/${id}`, {
+      await fetch(`profile/favours/${id}`, {
         method: "DELETE",
         headers: { token: localStorage.token },
       });
