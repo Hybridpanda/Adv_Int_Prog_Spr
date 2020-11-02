@@ -23,7 +23,7 @@ const Login = ({ setAuth }) => {
 
     try {
       setError(false);
-      const response = await fetch("auth/login", {
+      const response = await fetch("/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formbody),
